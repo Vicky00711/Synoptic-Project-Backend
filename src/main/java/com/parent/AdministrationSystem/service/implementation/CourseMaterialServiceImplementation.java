@@ -5,8 +5,11 @@ import com.parent.AdministrationSystem.entity.GradeLevel;
 import com.parent.AdministrationSystem.repository.CourseMaterialRepo;
 import com.parent.AdministrationSystem.repository.GradeRepository;
 import com.parent.AdministrationSystem.service.CourseMaterialService;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,6 +52,35 @@ public class CourseMaterialServiceImplementation implements CourseMaterialServic
             throw new RuntimeException("Failed to upload course material", e);
         }
     }
+
+
+
+    @Override
+    public Resource downloadCourseMaterial(Long materialId) {
+        CourseMaterial material = courseMaterialRepository.findById(materialId)
+                .orElseThrow(() -> new RuntimeException("Course material not found"));
+
+        try {
+            Path path = Paths.get(material.getFilePath());
+            Resource resource = (Resource)new UrlResource(path.toUri());
+
+            if (resource.exists()) {
+                return resource;
+            } else {
+                throw new RuntimeException("File not found: " + material.getFilePath());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error loading file", e);
+        }
+    }
+
+    @Override
+    public Path getCourseMaterialPath(Long materialId) {
+        CourseMaterial material = courseMaterialRepository.findById(materialId)
+                .orElseThrow(() -> new RuntimeException("Course material not found"));
+        return Paths.get(material.getFilePath());
+    }
+
 
     @Override
     public List<CourseMaterial> getCourseMaterialsByGrade(Long gradeId) {
