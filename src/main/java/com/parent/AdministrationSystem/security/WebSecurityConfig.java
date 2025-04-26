@@ -59,7 +59,7 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://synoptic-project-swi3-7s9qlmtsb-prateeks-projects-3c881b11.vercel.app/")); // Use specific origins in production
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://synoptic-project-frontend.vercel.app/")); // Use specific origins in production
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true); //
