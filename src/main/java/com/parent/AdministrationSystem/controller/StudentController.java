@@ -1,6 +1,7 @@
 package com.parent.AdministrationSystem.controller;
 
 import com.parent.AdministrationSystem.dto.StudentDto;
+import com.parent.AdministrationSystem.dto.StudentProfileDTO;
 import com.parent.AdministrationSystem.dto.UsersDto;
 import com.parent.AdministrationSystem.entity.Students;
 import com.parent.AdministrationSystem.service.StudentService;
@@ -61,9 +62,9 @@ public class StudentController {
 
     @GetMapping("/profile")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<StudentDto> getOwnProfile() {
+    public ResponseEntity<StudentProfileDTO> getOwnProfile() {
         // This endpoint will retrieve the profile of the currently logged-in student
-        StudentDto currentStudentProfile = studentService.findCurrentStudentProfile();
+        StudentProfileDTO currentStudentProfile = studentService.findCurrentStudentProfile();
         return new ResponseEntity<>(currentStudentProfile, HttpStatus.OK);
     }
 }

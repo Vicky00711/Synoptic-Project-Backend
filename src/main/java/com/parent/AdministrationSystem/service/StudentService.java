@@ -1,6 +1,7 @@
 package com.parent.AdministrationSystem.service;
 
 import com.parent.AdministrationSystem.dto.StudentDto;
+import com.parent.AdministrationSystem.dto.StudentProfileDTO;
 import com.parent.AdministrationSystem.dto.UsersDto;
 import com.parent.AdministrationSystem.entity.Students;
 
@@ -12,5 +13,5 @@ public interface StudentService {
      StudentDto findProfile(Long studentId);
      StudentDto updateProfile(Long studentId, StudentDto studentDto);
      List<Students> listOfStudents();
-     StudentDto findCurrentStudentProfile();
+     StudentProfileDTO findCurrentStudentProfile();
 }

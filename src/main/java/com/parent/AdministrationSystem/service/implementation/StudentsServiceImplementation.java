@@ -1,6 +1,7 @@
 package com.parent.AdministrationSystem.service.implementation;
 
 import com.parent.AdministrationSystem.dto.StudentDto;
+import com.parent.AdministrationSystem.dto.StudentProfileDTO;
 import com.parent.AdministrationSystem.entity.GradeLevel;
 import com.parent.AdministrationSystem.entity.Students;
 import com.parent.AdministrationSystem.entity.Users;
@@ -23,6 +24,7 @@ public class StudentsServiceImplementation implements StudentService {
     private final UsersRepository usersRepository;
     private final StudentRepository studentsRepository;
     private final GradeRepository gradeRepository;
+    private final SecurityUtils securityUtils;
 
     @Override
     public StudentDto createStudents(StudentDto studentDto) {
@@ -138,18 +140,26 @@ public class StudentsServiceImplementation implements StudentService {
 
 
     @Override
-    public StudentDto findCurrentStudentProfile() {
+    public StudentProfileDTO findCurrentStudentProfile() {
         // Get current logged-in user's email
-         SecurityUtils securityUtils = null;
-         String email = securityUtils.getCurrentUserEmail();
+        String email = securityUtils.getCurrentUserEmail();
 
         // Find student by email
         Students student = studentsRepository.findByUsersEmail(email)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
 
-        // Convert to DTO and return
-        return StudentMapper.mapToStudentDto(student);
+        return new StudentProfileDTO(
+                student.getStudentId(),
+                student.getUsers().getFirstName(),
+                student.getUsers().getLastName(),
+                student.getUsers().getEmail(),
+                student.getParentContact(),
+                student.getEnrollmentDate().toString(),
+                student.getGradeLevel().getId(),
+                student.getGradeLevel().getName()
+        );
     }
+
 
 
 }

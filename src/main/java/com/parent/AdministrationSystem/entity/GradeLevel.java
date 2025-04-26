@@ -1,12 +1,15 @@
 package com.parent.AdministrationSystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "grade_level")
 public class GradeLevel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
