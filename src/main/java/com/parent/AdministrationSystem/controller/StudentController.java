@@ -125,7 +125,7 @@ public class StudentController {
             byte[] fileBytes = Files.readAllBytes(filePath);
 
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF); // or dynamic if you want
+            headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDisposition(ContentDisposition.attachment()
                     .filename(filePath.getFileName().toString())
                     .build());

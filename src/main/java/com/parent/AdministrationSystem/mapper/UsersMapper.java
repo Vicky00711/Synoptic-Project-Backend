@@ -13,7 +13,7 @@ public class UsersMapper {
         dto.setFirstName(users.getFirstName());
         dto.setLastName(users.getLastName());
         dto.setEmail(users.getEmail());
-        dto.setPassword(null); // 🚫 Don't expose password
+        dto.setPassword(null);
         dto.setRole(users.getRole());
 
         return dto;
