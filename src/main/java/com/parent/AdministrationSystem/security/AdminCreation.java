@@ -20,9 +20,8 @@ public class AdminCreation {
                 adminUser.setPassword(passwordEncoder.encode("Admin@123"));
                 adminUser.setFirstName("System");
                 adminUser.setLastName("Administrator");
-                // Assuming your Users entity has a role field
                 adminUser.setRole(Users.Level.ADMIN);
-                // Set any other required fields
+
 
                 usersRepository.save(adminUser);
 
