@@ -62,24 +62,26 @@ public class UsersServiceImplementation implements UsersService {
         Users existingUser = usersRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
-        // If password is provided, encrypt it
+        // Update fields only if they are provided
+        if (usersDto.getFirstName() != null) {
+            existingUser.setFirstName(usersDto.getFirstName());
+        }
+        if (usersDto.getLastName() != null) {
+            existingUser.setLastName(usersDto.getLastName());
+        }
+        if (usersDto.getEmail() != null) {
+            existingUser.setEmail(usersDto.getEmail());
+        }
         if (usersDto.getPassword() != null && !usersDto.getPassword().isEmpty()) {
-            usersDto.setPassword(passwordEncoder.encode(usersDto.getPassword()));
-        } else {
-            // Keep the existing password if none provided
-            usersDto.setPassword(existingUser.getPassword());
+            existingUser.setPassword(passwordEncoder.encode(usersDto.getPassword()));
         }
 
-        // Map fields from DTO to entity
-        Users userToUpdate = UsersMapper.mapToUsers(usersDto);
-        userToUpdate.setUsersId(existingUser.getUsersId()); // Ensure ID is preserved
-
         // Save the updated user
-        Users updatedUser = usersRepository.save(userToUpdate);
+        Users updatedUser = usersRepository.save(existingUser);
 
-        // Convert back to DTO and return
         return UsersMapper.mapToUsersDto(updatedUser);
     }
+
 
     @Override
     public List<UsersDto> getAllUsers() {
