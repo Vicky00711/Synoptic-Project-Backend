@@ -33,7 +33,7 @@ public class CourseMaterialServiceImplementation implements CourseMaterialServic
     @Override
     public CourseMaterial uploadCourseMaterial(Long gradeId, String subjectName, String topic, MultipartFile file) {
         GradeLevel gradeLevel = gradeRepository.findById(gradeId)
-                .orElseThrow(() -> new EntityNotFoundException("Grade level not found"));
+                .orElseThrow(() -> new EntityNotFoundException("No grade level found"));
 
         try {
             String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
@@ -58,7 +58,7 @@ public class CourseMaterialServiceImplementation implements CourseMaterialServic
     @Override
     public Resource downloadCourseMaterial(Long materialId) {
         CourseMaterial material = courseMaterialRepository.findById(materialId)
-                .orElseThrow(() -> new RuntimeException("Course material not found"));
+                .orElseThrow(() -> new RuntimeException("No course material found"));
 
         try {
             Path path = Paths.get(material.getFilePath());

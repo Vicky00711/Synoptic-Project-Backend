@@ -10,7 +10,7 @@ public class SecurityUtils {
     public String getCurrentUserEmail() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
-            throw new RuntimeException("Current user not found in security context");
+            throw new RuntimeException("Cannot get current user");
         }
         return authentication.getName();
     }

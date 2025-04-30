@@ -59,7 +59,7 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://synoptic-project-frontend.vercel.app/", "http://my-school-admin-frontend.s3-website.eu-north-1.amazonaws.com")); // Use specific origins in production
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://synoptic-project-frontend.vercel.app/", "http://my-school-admin-frontend.s3-website.eu-north-1.amazonaws.com")); // all of the endpoints work choose any
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
@@ -72,7 +72,7 @@ public class WebSecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+    } //hashing password using BCrypt
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {

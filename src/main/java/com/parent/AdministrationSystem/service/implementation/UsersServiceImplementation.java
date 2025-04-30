@@ -26,43 +26,35 @@ public class UsersServiceImplementation implements UsersService {
 
     @Override
     public UsersDto createUsers(UsersDto usersDto) {
-        // Encrypt the password before saving
+        // password encrypted before saving
         usersDto.setPassword(passwordEncoder.encode(usersDto.getPassword()));
 
-        // Convert DTO to entity
         Users users = UsersMapper.mapToUsers(usersDto);
-        // Save to repository
         Users savedUsers = usersRepository.save(users);
-        // Convert entity back to DTO and return
         return UsersMapper.mapToUsersDto(savedUsers);
     }
 
     @Override
     public UsersDto getUserById(Long userId) {
-        // Find user by ID
         Users users = usersRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        // Convert the entity to DTO
         return UsersMapper.mapToUsersDto(users);
     }
 
     @Override
     public void deleteUser(Long userId) {
-        // Check if the user exists before attempting to delete
         if (!usersRepository.existsById(userId)) {
             throw new RuntimeException("User not found");
         }
-        // Delete the user
         usersRepository.deleteById(userId);
     }
 
     @Override
     public UsersDto updateUser(Long userId, UsersDto usersDto) {
-        // Find the existing user
         Users existingUser = usersRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
-        // Update fields only if they are provided
+        // update the fields if the fields are provided otherwise no
         if (usersDto.getFirstName() != null) {
             existingUser.setFirstName(usersDto.getFirstName());
         }
@@ -76,7 +68,7 @@ public class UsersServiceImplementation implements UsersService {
             existingUser.setPassword(passwordEncoder.encode(usersDto.getPassword()));
         }
 
-        // Save the updated user
+        // Saving the user
         Users updatedUser = usersRepository.save(existingUser);
 
         return UsersMapper.mapToUsersDto(updatedUser);

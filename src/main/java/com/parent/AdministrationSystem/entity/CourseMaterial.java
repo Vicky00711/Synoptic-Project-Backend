@@ -59,5 +59,4 @@ public class CourseMaterial {
 
 
 
-    // Getters and setters
 }

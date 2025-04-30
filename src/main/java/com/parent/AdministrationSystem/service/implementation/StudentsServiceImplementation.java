@@ -28,22 +28,22 @@ public class StudentsServiceImplementation implements StudentService {
 
     @Override
     public StudentDto createStudents(StudentDto studentDto) {
-        // Step 1: Get the user from the DB
+
         Users user = usersRepository.findById(studentDto.getUsers().getUsersId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // ✅ Step 2: Get the GradeLevel from the DB
+
         GradeLevel gradeLevel = gradeRepository.findById(studentDto.getGradeLevel().getId())
                 .orElseThrow(() -> new RuntimeException("Grade level not found"));
 
-        // Step 3: Create the student
+
         Students student = new Students();
         student.setUsers(user);
-        student.setGradeLevel(gradeLevel); // ✅ now managed entity
+        student.setGradeLevel(gradeLevel);
         student.setParentContact(studentDto.getParentContact());
         student.setEnrollmentDate(studentDto.getEnrollmentDate());
 
-        // Step 4: Save student and return DTO
+
         Students savedStudent = studentsRepository.save(student);
 
         return new StudentDto(
@@ -57,14 +57,14 @@ public class StudentsServiceImplementation implements StudentService {
 
     @Override
     public void deleteStudents(Long studentId) {
-        // Step 1: Find the student by studentId
+
         Students student = studentsRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
 
         Hibernate.initialize(student.getUsers());
 
-        // Step 2: Delete the student first
-        studentsRepository.delete(student); // This should trigger the cascade and delete the associated user
+
+        studentsRepository.delete(student);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class StudentsServiceImplementation implements StudentService {
             throw new RuntimeException("User not found for this student");
         }
 
-        // Update user fields if provided in the nested users object
+        // validation for extra check
         if (studentDto.getUsers() != null) {
             Users userDetails = studentDto.getUsers();
 
@@ -107,7 +107,7 @@ public class StudentsServiceImplementation implements StudentService {
             }
         }
 
-        // Update student fields
+        // update the student fields
         if (studentDto.getGradeLevel() != null) {
             student.setGradeLevel(studentDto.getGradeLevel());
         }

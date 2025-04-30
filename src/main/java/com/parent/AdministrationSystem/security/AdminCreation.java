@@ -13,7 +13,7 @@ public class AdminCreation {
     @Bean
     public CommandLineRunner initializeAdmin(UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            // Check if admin already exists
+            // manually creating an admin as admin is responsible for managing users and everyone
             if (usersRepository.findByEmail("admin@system.com").isEmpty()) {
                 Users adminUser = new Users();
                 adminUser.setEmail("admin@system.com");

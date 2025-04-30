@@ -43,7 +43,7 @@ public class GradeLevelServiceImplementation implements GradeLevelService {
     @Override
     public void uploadTimetable(Long gradeId, MultipartFile file) {
         GradeLevel gradeLevel = gradeRepository.findById(gradeId)
-                .orElseThrow(() -> new EntityNotFoundException("Grade level not found with ID: " + gradeId));
+                .orElseThrow(() -> new EntityNotFoundException("No grade level found with the given id : " + gradeId));
 
         try {
             String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
