@@ -45,7 +45,7 @@ public class StudentsServiceImplementationTest {
         securityUtils = mock(SecurityUtils.class);
         studentsService = new StudentsServiceImplementation(usersRepository, studentRepository, gradeRepository, securityUtils);
 
-
+        //setting up users data
         prateek = new Users();
         prateek.setUsersId(1L);
         prateek.setFirstName("Prateek");
@@ -53,12 +53,12 @@ public class StudentsServiceImplementationTest {
         prateek.setEmail("prateek@example.com");
         prateek.setPassword("secure123");
 
-        // Create mock grade
+        //setting up custom grade data
         grade10 = new GradeLevel();
         grade10.setId(1L);
         grade10.setName("Grade 10");
 
-        // Create mock student
+       //setting up student data
         student = new Students();
         student.setStudentId(1L);
         student.setUsers(prateek);
@@ -69,14 +69,16 @@ public class StudentsServiceImplementationTest {
 
     @Test
     void shouldCreateStudent() {
+        //arrange
         StudentDto dto = new StudentDto(null, prateek, 9876543210L, LocalDate.of(2023, 9, 1), grade10);
 
+        //act
         when(usersRepository.findById(1L)).thenReturn(Optional.of(prateek));
         when(gradeRepository.findById(1L)).thenReturn(Optional.of(grade10));
         when(studentRepository.save(any(Students.class))).thenAnswer(inv -> inv.getArgument(0));
 
         StudentDto result = studentsService.createStudents(dto);
-
+        //assert
         assertAll(
                 () -> assertThat(result.getUsers()).isEqualTo(prateek),
                 () -> assertThat(result.getGradeLevel()).isEqualTo(grade10)

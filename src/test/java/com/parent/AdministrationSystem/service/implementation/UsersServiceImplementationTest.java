@@ -62,7 +62,7 @@ class UsersServiceImplementationTest {
         ArgumentCaptor<Users> captor = ArgumentCaptor.forClass(Users.class);
         verify(usersRepository).save(captor.capture());
 
-        assertAll("User creation with password encoding",
+        assertAll(
                 () -> assertThat(captor.getValue().getPassword()).isEqualTo("encodedPass"),
                 () -> assertThat(result.getPassword()).isNull()
         );
@@ -74,7 +74,7 @@ class UsersServiceImplementationTest {
 
         UsersDto result = usersService.getUserById(1L);
 
-        assertAll("User fields",
+        assertAll(
                 () -> assertThat(result.getEmail()).isEqualTo("sahoo@gmail.com"),
                 () -> assertThat(result.getFirstName()).isEqualTo("Prateek")
         );
@@ -120,7 +120,7 @@ class UsersServiceImplementationTest {
 
         UsersDto result = usersService.updateUser(1L, updateDto);
 
-        assertAll("Updated user fields",
+        assertAll(
                 () -> assertThat(result.getFirstName()).isEqualTo("Updated"),
                 () -> assertThat(result.getPassword()).isNull()
         );
@@ -133,7 +133,7 @@ class UsersServiceImplementationTest {
 
         List<UsersDto> result = usersService.getAllUsers();
 
-        assertAll("All users list",
+        assertAll(
                 () -> assertThat(result).hasSize(2),
                 () -> assertThat(result.get(0).getEmail()).isEqualTo("sahoo@gmail.com"),
                 () -> assertThat(result.get(1).getEmail()).isEqualTo("vicky@yahoo.com")
