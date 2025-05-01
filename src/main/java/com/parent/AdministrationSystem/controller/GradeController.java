@@ -1,7 +1,9 @@
 package com.parent.AdministrationSystem.controller;
 
+import com.parent.AdministrationSystem.entity.CourseMaterial;
 import com.parent.AdministrationSystem.entity.GradeLevel;
 import com.parent.AdministrationSystem.entity.Students;
+import com.parent.AdministrationSystem.repository.CourseMaterialRepo;
 import com.parent.AdministrationSystem.repository.GradeRepository;
 import com.parent.AdministrationSystem.service.GradeLevelService;
 import org.springframework.core.io.Resource;
@@ -28,6 +30,9 @@ public class GradeController {
 
     @Autowired
     private GradeLevelService gradeLevelService;
+
+    @Autowired
+    private CourseMaterialRepo courseMaterialRepo;
 
     @Autowired
     private GradeRepository gradeRepository;
@@ -60,6 +65,8 @@ public class GradeController {
     @DeleteMapping("/grade-level/{gradeId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteGradeLevel(@PathVariable Long gradeId) {
+
+
         gradeLevelService.deleteGradeLevel(gradeId);
         return ResponseEntity.ok("Grade level deleted successfully");
     }

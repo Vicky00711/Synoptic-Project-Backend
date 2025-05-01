@@ -1,6 +1,8 @@
 package com.parent.AdministrationSystem.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class CourseMaterial {
@@ -13,9 +15,12 @@ public class CourseMaterial {
     private String topic;
     private String filePath;
 
-    @ManyToOne
-    @JoinColumn(name = "grade_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "grade_id", nullable = false)
     private GradeLevel gradeLevel;
+
+    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -56,7 +61,4 @@ public class CourseMaterial {
     public void setGradeLevel(GradeLevel gradeLevel) {
         this.gradeLevel = gradeLevel;
     }
-
-
-
 }
